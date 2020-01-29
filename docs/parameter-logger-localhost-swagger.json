@@ -1,0 +1,123 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "parameter-logger-localhost.paw",
+    "version": "v0.0.0"
+  },
+  "host": "localhost:8000",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/",
+  "paths": {
+    "/log/list": {
+      "post": {
+        "summary": "Log / List [POST]",
+        "description": "List available log files.",
+        "operationId": "da59163f-2fdf-4ed5-b559-65d98fdbcbd9",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "{}"
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "no response description was provided for this operation"
+          }
+        }
+      }
+    },
+    "/log/show": {
+      "post": {
+        "summary": "Log / Show [POST]",
+        "description": "Display a log file by name.",
+        "operationId": "05b80341-6a7a-4302-b01a-97a2c8072dde",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "{\"file\":\"somefile.log\"}"
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "no response description was provided for this operation"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "/ [GET] Sample, with Cookie ",
+        "description": "Sample request with parameters, cookie parameter is set",
+        "operationId": "ad5564b2-c60b-4641-8b77-6dba0f05f97d",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "https://victim.cloud",
+            "name": "Referer",
+            "required": false,
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "default": "12",
+            "name": "imagine",
+            "required": false,
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "default": "34",
+            "name": "you've",
+            "required": false,
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "default": "56",
+            "name": "stolen",
+            "required": false,
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "default": "78",
+            "name": "this",
+            "required": false,
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "default": "victim-session-id and other nice things...",
+            "name": "cookie",
+            "required": false,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "no response description was provided for this operation"
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}
