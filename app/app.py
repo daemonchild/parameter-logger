@@ -119,7 +119,7 @@ def api_log_show_post():
         if lfexists:
 
             log.entry_add(LOGPATH, LOGFILE, f"*** Log/Show Request [End / Success] ***")
-            return (send_from_directory(LOGPATH, logfile, mimetype='text\plain', as_attachment=True))
+            return (send_from_directory(LOGPATH, logfile, mimetype='text\\plain', as_attachment=True))
 
         else:
             log.entry_add(LOGPATH, LOGFILE, f"*** Log/Show Request [End / Fail] ***")
