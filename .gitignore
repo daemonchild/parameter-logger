@@ -1,7 +1,7 @@
 # Additional
 .DS_Store
 .idea/
-var/log/
+var/log/*
 
 
 

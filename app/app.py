@@ -6,7 +6,7 @@ from datetime import datetime
 thispath = os.path.dirname(os.path.realpath(__file__))
 
 APPNAME = "parameter-logger"
-VERSION = "v0.1"
+VERSION = "v1.0"
 LOGPATH = f"{thispath}/var/log/"
 LOGFILE = f"{datetime.now().strftime('%Y%m%d')}.log"
 
@@ -33,26 +33,46 @@ def get_from_json (json, value):
 
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def api_root_page():
 
+    _query_string = ""
+    _data_dict = {}
+
     log.entry_add(LOGPATH, LOGFILE, "*** Connection [Begin] ***")
-    log.entry_add(LOGPATH, LOGFILE, f"referer: {request.headers.get('Referer')}")
+    if request.headers:
+        log.entry_add(LOGPATH, LOGFILE, f"referer: {request.headers.get('Referer')}")
 
+    # If we have URL parameters, process them
     if request.args:
-
+        log.entry_add(LOGPATH, LOGFILE, "*** [GET Request with parameters ] ***")
         if 'cookie' in request.args:
-            log.entry_add(LOGPATH, LOGFILE, "[Cookie Parameter Found]")
+            log.entry_add(LOGPATH, LOGFILE, "*** [Cookie Parameter Found] ***")
 
-        data = request.args.to_dict()
+        _data_dict = dict(request.args)
 
-        for (p) in request.args:
+    
+    # If we have POST data, process it
 
-            log.entry_add (LOGPATH, LOGFILE, f"{p}:{data[p]}")
-            log.entry_add(LOGPATH, LOGFILE, "*** Connection [End] ***")
+   # Check POST data type
+    if "application/json" in request.content_type:
+        if request.json:
+            _data_dict = dict(request.json)
+            log.entry_add(LOGPATH, LOGFILE, "*** [POST Request with json ] ***")
+        
+    elif "application/x-www-form-urlencoded" in request.content_type:
+        if request.form:
+            _data_dict = dict(request.form)
+            log.entry_add(LOGPATH, LOGFILE, "*** [POST Request with www-form data ] ***")
 
+    if _data_dict != "":
+        print (_data_dict)
+        log.entry_add (LOGPATH, LOGFILE, f"{_data_dict}")
+        #for _key, _value in _data_dict.items():
+        #    log.entry_add (LOGPATH, LOGFILE, f"{_key}:{_value}")
+        log.entry_add(LOGPATH, LOGFILE, "*** Connection [End] ***")    
         return (make_response(jsonify('server status', 'ok'), 200))
-
+    
     log.entry_add(LOGPATH, LOGFILE, f"*** No Parameters Logged [End]  ***")
     return (make_response(jsonify('error', 'bad request'), 400))
 
